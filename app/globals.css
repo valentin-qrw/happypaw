@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "uploadthing/tw/v4";
+@source "../node_modules/@uploadthing/react/dist";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -124,5 +127,14 @@
   }
   p {
     @apply text-gray-600;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  label {
+    @apply !mb-1 block;
+  }
+  input, textarea {
+    @apply !text-sm;
   }
 }
