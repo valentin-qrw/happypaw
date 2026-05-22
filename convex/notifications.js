@@ -18,6 +18,24 @@ export const createNotification = mutation({
     },
 });
 
+export const getNotificationsByUser = query({
+    args: { userId: v.id("users")},
+    handler: async (ctx, args) => {
+        return await ctx.db
+            .query("notifications")
+            .withIndex("by_user", (q) => q.eq("userId", args.userId))
+            .order("desc")
+            .collect();
+    },
+});
+
+export const markAsRead = mutation({
+    args: { id: v.id("notifications") },
+    handler: async (ctx, args) => {
+        return await ctx.db.patch(args.id, { isRead: true });
+    },
+});
+
 export const getUnreadCount = query({
     args: {
         userId: v.id("users"),
