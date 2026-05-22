@@ -26,21 +26,75 @@ export const createApplication = mutation({
     },
 });
 
+export const getApplicationById = query({
+    args: { id: v.id("adoptionApplications") },
+    handler: async (ctx, args) => {
+        return await ctx.db.get(args.id);
+    },
+});
+
 export const getApplicationsByApplicant = query({
     args: {
         applicantId: v.id("users"),
     },
     handler: async (ctx, args) => {
-        return await ctx.db.query("adoptionApplications").withIndex("by_applicant", (q) => q.eq("applicantId", args.applicantId)).collect();
+        const applications = await ctx.db
+        .query("adoptionApplications")
+        .withIndex("by_applicant", (q) =>
+            q.eq("applicantId", args.applicantId)
+        )
+        .collect();
+
+        return await Promise.all(
+        applications.map(async (application) => {
+            const owner = await ctx.db.get(application.ownerId);
+            const applicant = await ctx.db.get(application.applicantId);
+
+            return {
+            ...application,
+            owner,
+            applicant,
+            };
+        })
+        );
     },
 });
 
 export const getApplicationsByOwner = query({
     args: {
-        ownerId: v.id("users"),         
+        ownerId: v.id("users"),
     },
     handler: async (ctx, args) => {
-        return await ctx.db.query("adoptionApplications").withIndex("by_owner", (q) => q.eq("ownerId", args.ownerId)).collect();
+        const applications = await ctx.db
+        .query("adoptionApplications")
+        .withIndex("by_owner", (q) => q.eq("ownerId", args.ownerId))
+        .collect();
+
+        return await Promise.all(
+        applications.map(async (application) => {
+            const owner = await ctx.db.get(application.ownerId);
+            const applicant = await ctx.db.get(application.applicantId);
+
+            return {
+            ...application,
+            owner,
+            applicant,
+            };
+        })
+        );
+    },
+});
+
+export const updateApplicationStatus = mutation({
+    args: {
+        id: v.id("adoptionApplications"),
+        status: v.string(),
+    },
+    handler: async (ctx, args) => {
+        return await ctx.db.patch(args.id, {
+            status: args.status,
+            updatedAt: Date.now(),
+        });
     },
 });
 
