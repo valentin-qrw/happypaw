@@ -92,7 +92,7 @@ export default function AdoptPage() {
             await createNotification({
                 userId: pet.ownerId,
                 type: "adoption_request",
-                title: "Нова заявка на прихисток",
+                title: "Нова заявка",
                 message: `${currentUser.name} подав(ла) заявку на прихисток для ${pet.name}`,
                 relatedId: applicationId,
             });
@@ -222,7 +222,7 @@ export default function AdoptPage() {
                         </div>
 
                         <div>
-                            <Label htmlFor="otherPets">Графік роботи *</Label>
+                            <Label htmlFor="otherPets">Чи є у вас інші тварини? *</Label>
                             <Select value={formData.otherPets} onValueChange={(value) => handleInputChange("otherPets", value)}>
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Чи є у вас інші тварини?" />

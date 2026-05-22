@@ -104,9 +104,9 @@ export default function DiscoverPage() {
                     {/* Search bar */}
 
                     <div className="relative">
-                        <Search className="absolute top-1/2 left-3 size-4 -translate-1/2 transform text-gray-400" />
+                        <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 transform text-gray-400" />
                         <Input
-                            placeholder="Пошук за ім’ям, породою або описом..."
+                            placeholder="Шукайте за ім’ям, породою або описом..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)} 
                             className="pl-10"

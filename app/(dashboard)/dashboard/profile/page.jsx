@@ -73,9 +73,19 @@ export default function ProfilePage() {
         }
     };
 
+    const getStatusLabel = (status) => {
+        const labels = {
+            pending: "На розгляді",
+            accepted: "Схвалено",
+            rejected: "Відхилено",
+        };
+
+        return labels[status] || status;
+    };
+
     return (
         <div className="p-6">
-            {/* Profile header */}
+            {/* header */}
             <Card className="mb-8">
                 <CardContent className="p-8">
                     <div className="flex flex-col items-start md:flex-row md:items-center md:space-x-6 md:space-y-0">
@@ -115,18 +125,18 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 flex space-x-3 md:mt-0">
-                                    <Link href="/dashboard/settings">
-                                        <Button variant="outline">
+                                <div className="mt-4 flex w-full flex-col gap-3 sm:flex-row md:mt-0 md:w-auto">
+                                    <Link href="/dashboard/settings" className="w-full sm:w-auto">
+                                        <Button variant="outline" className="w-full sm:w-auto">
                                             <Settings className="mr-2 size-4" />
                                             Редагувати профіль
                                         </Button>
                                     </Link>
 
-                                    <Link href="/dashboard/add-pet">
-                                        <Button>
+                                    <Link href="/dashboard/add-pet" className="w-full sm:w-auto">
+                                        <Button className="w-full sm:w-auto">
                                             <PlusCircle className="mr-2 size-4" />
-                                            Додайте тварину
+                                            Додати тварину
                                         </Button>
                                     </Link>
                                 </div>
@@ -221,7 +231,7 @@ export default function ProfilePage() {
                                                 <div className="flex items-center space-x-2">
                                                     {getStatusIcon(application.status)}
                                                     <Badge className={getStatusColor(application.status)}>
-                                                        {application.status}
+                                                        {getStatusLabel(application.status)}
                                                     </Badge>
                                                 </div>
                                             </div>
@@ -232,7 +242,7 @@ export default function ProfilePage() {
                                             </p>
 
                                             {application.status === "accepted" && (
-                                                <Link href={`/dashboard/messages/application=${application._id}`}>
+                                                <Link href={`/dashboard/messages?application=${application._id}`}>
                                                     <Button size="sm" variant="outline">
                                                         Надіслати повідомлення власнику
                                                     </Button>
@@ -274,7 +284,7 @@ export default function ProfilePage() {
                                                 <div className="flex items-center space-x-2">
                                                     {getStatusIcon(application.status)}
                                                     <Badge className={getStatusColor(application.status)}>
-                                                        {application.status}
+                                                        {getStatusLabel(application.status)}
                                                     </Badge>
                                                 </div>
                                             </div>
@@ -285,7 +295,7 @@ export default function ProfilePage() {
                                             </p>
 
                                             {application.status === "accepted" && (
-                                                <Link href={`/dashboard/application/${application._id}`}>
+                                                <Link href={`/dashboard/applications/${application._id}`}>
                                                     <Button size="sm" variant="outline">
                                                         Переглянути деталі заявки
                                                     </Button>

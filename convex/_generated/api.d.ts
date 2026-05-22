@@ -9,6 +9,7 @@
  */
 
 import type * as applications from "../applications.js";
+import type * as messages from "../messages.js";
 import type * as notifications from "../notifications.js";
 import type * as pets from "../pets.js";
 import type * as users from "../users.js";
@@ -21,6 +22,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   applications: typeof applications;
+  messages: typeof messages;
   notifications: typeof notifications;
   pets: typeof pets;
   users: typeof users;

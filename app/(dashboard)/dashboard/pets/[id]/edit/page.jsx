@@ -264,7 +264,7 @@ export default function EditPetPage() {
                             </div>
                         </div>
 
-                        <div className="grid gris-cols-1 gap-4 md:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                             <div>
                                 <Label htmlFor="breed">Порода *</Label>
                                 <Input 

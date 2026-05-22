@@ -204,15 +204,21 @@ export default function SettingsPage() {
                             <p className="mb-3 text-sm">Виберіть типи тварин, які вас цікавлять</p>
 
                             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-                                {["Собаки", "Коти", "Птахи", "Гризуни", "Інші"].map((type) => (
-                                    <div key={type} className="flex items-center space-x-2">
+                                {[
+                                    { value: "dog", label: "Собаки" },
+                                    { value: "cat", label: "Коти" },
+                                    { value: "bird", label: "Птахи" },
+                                    { value: "rodent", label: "Гризуни" },
+                                    { value: "other", label: "Інші" },
+                                ].map((type) => (
+                                    <div key={type.value} className="flex items-center space-x-2">
                                         <Checkbox
-                                            id={type}
-                                            checked={preferences.petType.includes(type)}
-                                            onCheckedChange={(checked) => handleArrayPreferenceChange("petType", type, checked)}
+                                            id={type.value}
+                                            checked={preferences.petType.includes(type.value)}
+                                            onCheckedChange={(checked) => handleArrayPreferenceChange("petType", type.value, checked)}
                                         />
-                                        <Label htmlFor={type} className="capitalize">
-                                            {type}
+                                        <Label htmlFor={type.value} className="capitalize">
+                                            {type.label}
                                         </Label>
                                     </div>
                                 ))}
@@ -227,15 +233,19 @@ export default function SettingsPage() {
                             <p className="mb-3 text-sm">Виберіть розміри тварин, які вас цікавлять</p>
 
                             <div className="grid grid-cols-3 gap-3">
-                                {["Малий", "Середній", "Великий"].map((size) => (
-                                    <div key={size} className="flex items-center space-x-2">
+                                {[
+                                    { value: "small", label: "Малий" },
+                                    { value: "medium", label: "Середній" },
+                                    { value: "large", label: "Великий" }
+                                ].map((size) => (
+                                    <div key={size.value} className="flex items-center space-x-2">
                                         <Checkbox
-                                            id={size}
-                                            checked={preferences.size.includes(size)}
-                                            onCheckedChange={(checked) => handleArrayPreferenceChange("size", size, checked)}
+                                            id={size.value}
+                                            checked={preferences.size.includes(size.value)}
+                                            onCheckedChange={(checked) => handleArrayPreferenceChange("size", size.value, checked)}
                                         />
-                                        <Label htmlFor={size} className="capitalize">
-                                            {size}
+                                        <Label htmlFor={size.value} className="capitalize">
+                                            {size.label}
                                         </Label>
                                     </div>
                                 ))}

@@ -143,19 +143,17 @@ export const getRecommendedPets = query({
     },
     handler: async (ctx, args) => {
         let pets = await ctx.db
-        .query("pets")
-        .withIndex("by_availability", (q) => q.eq("isAvailable", true))
-        .collect();
+            .query("pets")
+            .withIndex("by_availability", (q) => q.eq("isAvailable", true))
+            .collect();
     
-        // filter out pets owned by the user
         pets = pets.filter((pet) => pet.ownerId !== args.userId);
         
-        // if no preferences, return all available pets
         if (!args.preferences) {
-            return pets.slice(0, 12); // limit to 12 results
+            return pets.slice(0, 12);
         }
 
-        const { petType, size, age, activityLevel} = args.preferences;
+        const { petType, size, age, activityLevel } = args.preferences;
         
         if (petType && petType.length > 0) {
             pets = pets.filter((pet) => petType.includes(pet.type));
@@ -165,7 +163,7 @@ export const getRecommendedPets = query({
             pets = pets.filter((pet) => size.includes(pet.size));
         }
 
-        if (activityLevel) {
+        if (activityLevel && activityLevel !== "none") {
             pets = pets.filter((pet) => pet.activityLevel === activityLevel);
         }
 
@@ -176,26 +174,17 @@ export const getRecommendedPets = query({
                         case "young":
                             return pet.age < 1;
                         case "adult":
-                            return pet.age >= 1 && pet.age < 5;
+                            return pet.age >= 1 && pet.age <= 5;
                         case "senior":
                             return pet.age >= 6;
                         default:
-                            return true;    
+                            return false;    
                     }
                 });
             });
         }
-        // if no preferences, return  random pets
-
-        if (pets.length === 0) {
-            pets = await ctx.db
-            .query("pets")
-            .withIndex("by_availability", (q) => q.eq("isAvailable", true))
-            .collect();
-            pets = pets.filter((pet) => pet.ownerId !== args.userId);
-        }
         
-        return pets.slice(0, 12); // limit to 12 results
+        return pets.slice(0, 12);
     }    
 });
 
