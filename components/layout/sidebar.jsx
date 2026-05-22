@@ -66,7 +66,7 @@ export default function Sidebar({ isOpen, onClose  }) {
     return (
         <>
             {/* Mobile overlay */ }
-            {isOpen && <div className="bg-opacity-25 fixed inset-0 z-40 bg-black lg:hidden" onClick={onClose}></div>}
+            {isOpen && <div className="fixed inset-0 z-40 bg-black/25 lg:hidden" onClick={onClose}></div>}
 
             {/* Sidebar */ }
             <div className={cn("fixed inset-y-0 left-0 z-50 w-64 transform bg-white shadow-lg transition-transform duration-300 ease-in-out lg:static lg:inset-0 lg:translate-x-0", isOpen ? "translate-x-0" : "-translate-x-full")}>
